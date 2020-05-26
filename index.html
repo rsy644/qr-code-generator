@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>QR Code Generator</title>
+	<link rel="stylesheet" type="text/css" media="screen" href="css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="css/styles.css">
+	<script type="text/javascript" href="js/bootstrap.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div id="input-form">
+			<h1>QR Code Generator</h1>
+			<div class="row qr_code">
+			  	<span v-show="errors" class="error">
+			  	Please ensure that at least one of the form fields is filled in.
+			  	</span>
+			</div>
+			<form class="row qr_code">
+				<div class="col-sm-3">
+					<input v-on:click="generate_url" class="btn btn-success" value="Generate QR Code">
+				</div>
+				<div class="col-sm-3">
+					<label for="url-link" name="url-link">URL:</label>
+					<input type="text" v-model="url" id="url-link" class="url-link">
+				</div>
+				<div class="col-sm-3">
+					<label for="pixel_size" name="pixel_size">Pixels:</label>
+					<input type="text" v-model="pixel_size" id="pixel_size" class="pixel_size">
+				</div>
+				<div class="col-sm-2">
+					<label for="transparent" name="transparent">Transparent?</label>
+					<input type="checkbox" v-model="transparent" id="transparent" class="transparent" true-value="transparent" false-value="">
+				</div>
+				<div class="col-sm-1">
+					<select v-on:change="on_change(this.value)" v-model="image_type" class="dropdown">
+						<option value="png">PNG Image</option>
+						<option value="svg">SVG Image</option>
+					</select>
+				</div>
+			</form>
+			<div class="row generated-code">
+				<div class="col-sm-12">
+					<p class="generated-code">Generated Code: <span v-show="show_url" class="generated-qr-code">https://qrtag.net/api/qr_{{ transparent }}_{{ pixel_size }}.{{ image_type }}?url={{ url }}</span></p>
+					<img class="generated" v-show="show_url" :src="`https://qrtag.net/api/qr_${ transparent }_${ pixel_size }.${ image_type }?url=${ url }`" />
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<h2>QR Code History</h2>
+					<ul v-for="(url in url_log">
+						<li>{{ url.date }} {{ url.code }}</li>
+					</ul>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+  	<script src="app.js"></script>
+</body>
+</html>

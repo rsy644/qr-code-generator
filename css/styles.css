@@ -1,0 +1,11 @@
+.qr_code, .generated-code {
+	margin-top: 50px;
+}
+
+.error {
+	margin-left: 15px;
+}
+
+.generated {
+	margin: 30px 0;
+}
